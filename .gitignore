@@ -1,5 +1,9 @@
-HELP.md
+### python ###
 /venv/
+/__pycache__/
+
+
+HELP.md
 /target/
 !.mvn/wrapper/maven-wrapper.jar
 .mvn
