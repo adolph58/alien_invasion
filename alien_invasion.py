@@ -97,7 +97,7 @@ class AlienInvasion:
         """响应子弹和外星人碰撞。"""
         # 删除发生碰撞的子弹和外星人。
 
-        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, False, True)
+        collisions = pygame.sprite.groupcollide(self.bullets, self.aliens, True, True)
 
         if not self.aliens:
             # 删除现有的子弹并新建一群外星人
