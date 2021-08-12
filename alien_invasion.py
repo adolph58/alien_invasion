@@ -70,8 +70,23 @@ class AlienInvasion:
 
     def _check_play_button(self, mouse_pos):
         """在玩家单击 Play 按钮时开始新游戏。"""
-        if self.play_button.rect.collidepoint(mouse_pos):
+        button_clicked = self.play_button.rect.collidepoint(mouse_pos)
+        if button_clicked and not self.stats.game_active:
+            # 重置游戏设置。
+            self.settings.initialize_dynamic_settings()
+
+            # 重置游戏统计信息。
+            self.stats.reset_stats()
             self.stats.game_active = True
+
+            # 清空余下的外星人和子弹。
+            self.aliens.empty()
+            self.bullets.empty()
+
+            # 创建一群新的外星人并让飞船居中。
+            self._create_fleet()
+            self.ship.center_ship()
+            pygame.mouse.set_visible(False)
 
     def _check_keydown_events(self, event):
         """响应按键。"""
@@ -120,6 +135,7 @@ class AlienInvasion:
             # 删除现有的子弹并新建一群外星人
             self.bullets.empty()
             self._create_fleet()
+            self.settings.increase_speed()
 
     def _create_fleet(self):
         """创建外星人群。"""
@@ -184,6 +200,7 @@ class AlienInvasion:
             sleep(0.5)
         else:
             self.stats.game_active = False
+            pygame.mouse.set_visible(True)
 
     def _check_fleet_edges(self):
         """有外星人到达边缘时采取相应的措施。"""
